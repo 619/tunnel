@@ -1,7 +1,7 @@
 {
   "name": "tunnel-new",
-  "description": "Expose localhost to the world",
-  "version": "2.0.2",
+  "description": "Expose localhost to the world with IP-based tunnels",
+  "version": "4.2.0",
   "license": "MIT",
   "repository": {
     "type": "git",
