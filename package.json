@@ -1,5 +1,5 @@
 {
-  "name": "localtunnel",
+  "name": "tunnel-new",
   "description": "Expose localhost to the world",
   "version": "2.0.2",
   "license": "MIT",
@@ -13,9 +13,9 @@
     "Gert Hengeveld <gert@hichroma.com>",
     "Tom Coleman <tom@hichroma.com>"
   ],
-  "main": "./localtunnel.js",
+  "main": "./tunnel-new.js",
   "bin": {
-    "lt": "bin/lt.js"
+    "tunnel-new": "bin/tunnel-new.js"
   },
   "scripts": {
     "test": "mocha --reporter list --timeout 60000 -- *.spec.js"
