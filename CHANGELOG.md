@@ -1,3 +1,7 @@
+# 6.0.9 (2025-04-15)
+
+- Forked to tunnel.new
+
 # 2.0.2 (2021-09-18)
 
 - Upgrade dependencies

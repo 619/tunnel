@@ -1,8 +1,6 @@
 # tunnel-new
 
-tunnel-new exposes your localhost to the world for easy testing and sharing! No need to mess with DNS or deploy just to have others test out your changes.
-
-Great for working with browser testing tools like browserling or external api callback services like twilio which require a public url for callbacks.
+tunnel-new is a fork of localtunnel that segregates tunnels by IP address. If person A at 0.0.0.0 opens a tunnel to site A at a.tunnel.new, it can only be accessed by users at 0.0.0.0. If person B at 1.1.1.1 opens a tunnel to site B at b.tunnel.new, it can only be accessed by users at 1.1.1.1. Users at 0.0.0.0 will not be able to access site B, and users at 1.1.1.1 will not be able to access site A. Users at 2.2.2.2 won't be able to access either site.
 
 ## Quickstart
 
@@ -64,7 +62,7 @@ const tunnelNew = require('tunnel-new');
   const tunnel = await tunnelNew({ port: 3000 });
 
   // the assigned public url for your tunnel
-  // i.e. https://abcdefgjhij.tunnel-new.me
+  // i.e. https://abcdefgjhij.tunnel.new
   tunnel.url;
 
   tunnel.on('close', () => {
@@ -77,7 +75,7 @@ const tunnelNew = require('tunnel-new');
 
 - `port` (number) [required] The local port number to expose through tunnel-new.
 - `subdomain` (string) Request a specific subdomain on the proxy server. **Note** You may not actually receive this name depending on availability.
-- `host` (string) URL for the upstream proxy server. Defaults to `https://tunnel-new.me`.
+- `host` (string) URL for the upstream proxy server. Defaults to `https://tunnel.new`.
 - `local_host` (string) Proxy to this hostname instead of `localhost`. This will also cause the `Host` header to be re-written to this value in proxied requests.
 - `local_https` (boolean) Enable tunneling to local HTTPS server.
 - `local_cert` (string) Path to certificate PEM file for local HTTPS server.
@@ -102,22 +100,6 @@ The `tunnel` instance has the following methods
 | method | args | description      |
 | ------ | ---- | ---------------- |
 | close  |      | close the tunnel |
-
-## other clients
-
-Clients in other languages
-
-_go_ [gotunnelme](https://github.com/NoahShen/gotunnelme)
-
-_go_ [go-localtunnel](https://github.com/localtunnel/go-localtunnel)
-
-_C#/.NET_ [localtunnel-client](https://github.com/angelobreuer/localtunnel-client)
-
-_Rust_ [rlt](https://github.com/kaichaosun/rlt)
-
-## server
-
-See [localtunnel/server](//github.com/localtunnel/server) for details on the server that powers tunnel-new.
 
 ## License
 

@@ -5,10 +5,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/localtunnel/localtunnel.git"
+    "url": "git@github.com:619/tunnel.git"
   },
-  "author": "Roman Shtylman <shtylman@gmail.com>",
+  "author": "Bobby Zhang <zhang.bobby98@gmail.com>",
   "contributors": [
+    "Bobby Zhang <zhang.bobby98@gmail.com>",
     "Roman Shtylman <shtylman@gmail.com>",
     "Gert Hengeveld <gert@hichroma.com>",
     "Tom Coleman <tom@hichroma.com>"
