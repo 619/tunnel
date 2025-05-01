@@ -3,6 +3,7 @@
 
 const openurl = require('openurl');
 const yargs = require('yargs');
+const axios = require('axios');
 
 const tunnelNew = require('../tunnel-new');
 const { version } = require('../package');
@@ -22,6 +23,11 @@ const { argv } = yargs
   .option('s', {
     alias: 'subdomain',
     describe: 'Request this subdomain',
+  })
+  .option('a', {
+    alias: 'public-alias',
+    describe: 'Request a public alias for the tunnel',
+    type: 'string',
   })
   .option('l', {
     alias: 'local-host',
@@ -115,6 +121,46 @@ if (typeof argv.port !== 'number') {
       
       // Reset reconnect attempts on successful connection
       reconnectAttempts = 0;
+      
+      // -- Start Public Alias Registration --
+      if (argv.publicAlias) {
+        const alias = argv.publicAlias;
+        const primaryId = tunnel.id; // Assuming tunnel.id holds the primary ID
+        const aliasRegisterUrl = `${tunnel.url.protocol}//${tunnel.url.hostname}/api/tunnels/${primaryId}/public-alias`;
+
+        console.log(`\nAttempting to register public alias '${alias}' for tunnel ${primaryId}...`);
+        try {
+          const response = await axios.post(aliasRegisterUrl, { alias }, {
+            headers: { 'Content-Type': 'application/json' },
+          });
+
+          if (response.status === 200 || response.status === 201) {
+            console.log(`Successfully registered public alias: ${alias}`);
+            // Optional: Construct and display the alias URL, though not required by the prompt
+            // console.log(`Alias URL: ${tunnel.url.protocol}//${alias}.${primaryId}.${tunnel.url.hostname.split('.').slice(1).join('.')}`);
+          } else {
+            console.error(`Failed to register public alias '${alias}'. Server responded with status: ${response.status}`);
+            if (response.data && response.data.message) {
+              console.error(`Server message: ${response.data.message}`);
+            }
+          }
+        } catch (error) {
+          console.error(`Error registering public alias '${alias}': ${error.message}`);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error(`Status: ${error.response.status}`);
+            console.error(`Data: ${JSON.stringify(error.response.data)}`);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received from server.');
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error setting up request:', error.message);
+          }
+        }
+      }
+      // -- End Public Alias Registration --
       
       // Setup event listeners
       setupTunnelListeners(tunnel);
